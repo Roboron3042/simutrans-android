@@ -9,7 +9,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
     - name: install_dependencies
       run: |
         sudo apt-get -y update
