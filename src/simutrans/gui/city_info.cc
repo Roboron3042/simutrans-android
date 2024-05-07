@@ -8,6 +8,7 @@
 #include "../tool/simmenu.h"
 #include "../world/simworld.h"
 #include "../simcolor.h"
+#include "../dataobj/environment.h"
 #include "../dataobj/translator.h"
 #include "../display/viewport.h"
 #include "../utils/cbuffer.h"
@@ -163,7 +164,7 @@ const uint8 hist_type_color[MAX_CITY_HISTORY] =
 
 
 city_info_t::city_info_t(stadt_t* city) :
-	gui_frame_t( name, NULL ),
+	gui_frame_t( "", NULL),
 	city(city)
 {
 	if (city) {
@@ -178,7 +179,8 @@ void city_info_t::init()
 	set_table_layout(1,0);
 
 	// add city name input field
-	name_input.add_listener( this );
+	name_input.set_notify_all_changes_delay(500);	// since each letter triggers a tool
+	name_input.add_listener(this);
 	add_component(&name_input);
 
 	add_table(2,0)->set_alignment(ALIGN_TOP);
@@ -365,6 +367,8 @@ void gui_city_minimap_t::add_pax_dest( array2d_tpl<PIXVAL> &pax_dest, const spar
 void city_info_t::update_labels()
 {
 	stadt_t* const c = city;
+
+	set_name(city->get_name());
 
 	// display city stats
 	lb_size.buf().printf( "%d (%.1f)", c->get_einwohner(), c->get_wachstum() / 10.0);         lb_size.update();

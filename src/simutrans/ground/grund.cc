@@ -580,6 +580,8 @@ void grund_t::take_obj_from(grund_t* other_gr)
 void grund_t::open_info_window()
 {
 	if(env_t::ground_info  ||  hat_wege()) {
+		if (hat_wege()) {
+		}
 		create_win(new grund_info_t(this), w_info, (ptrdiff_t)this);
 	}
 }
@@ -590,9 +592,13 @@ void grund_t::info(cbuffer_t& buf) const
 	if(!is_water()) {
 		if(flags&has_way1) {
 			// bridges / tunnels only carry dummy ways
-			if(ist_tunnel()  ||  ist_bruecke()) {
+			if (!ist_tunnel() && !ist_bruecke()) {
 				buf.append(translator::translate(get_weg_nr(0)->get_name()));
 				buf.append("\n");
+				if (const char* translated_detail = translator::translate_obj_details(get_weg_nr(0)->get_name())) {
+					buf.append(translated_detail);
+					buf.append("\n\n");
+				}
 			}
 			obj_bei(0)->info(buf);
 			// creator of bridge or tunnel graphic

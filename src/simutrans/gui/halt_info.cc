@@ -314,6 +314,7 @@ void halt_info_t::init(halthandle_t halt)
 			// input name
 			tstrncpy(edit_name, halt->get_name(), lengthof(edit_name));
 			input.set_text(edit_name, lengthof(edit_name));
+			input.set_notify_all_changes_delay(500);	// since each letter triggers a tool
 			input.add_listener(this);
 			add_component(&input, 2);
 
@@ -973,7 +974,7 @@ bool halt_info_t::action_triggered( gui_action_creator_t *comp,value_t /* */)
 		sort_button.set_text(sort_text[env_t::default_sortmode]);
 	}
 	else if(  comp == &input  ) {
-		if(  strcmp(halt->get_name(),edit_name)  ) {
+		if (strcmp(halt->get_name(), edit_name)) {
 			// text changed => call tool
 			cbuffer_t buf;
 			buf.printf( "h%u,%s", halt.get_id(), edit_name );

@@ -372,12 +372,6 @@ private:
 	uint32 last_interaction;
 
 	/**
-	 * ms, when the last step was done.
-	 * To calculate the fps and the simloops.
-	 */
-	uint32 last_step_time;
-
-	/**
 	* ms, when the next step is to be done.
 	* To calculate the fps and the simloops.
 	*/
@@ -984,8 +978,8 @@ public:
 	void remove_attraction(gebaeude_t *gb);
 	const weighted_vector_tpl<gebaeude_t*> &get_attractions() const {return attractions; }
 
-	void add_label(koord k) { labels.append_unique(k); }
-	void remove_label(koord k) { labels.remove(k); }
+	void add_label(koord k);
+	void remove_label(koord k);
 	const vector_tpl<koord>& get_label_list() const { return labels; }
 
 	bool add_fab(fabrik_t *fab);

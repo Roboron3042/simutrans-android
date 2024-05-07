@@ -589,6 +589,11 @@ int simu_main(int argc, char** argv)
 			}
 		}
 	}
+	
+	// create directory and subdirectories
+	dr_mkdir(env_t::install_dir);
+	dr_mkdir(env_t::user_dir);
+    
 	// set portable, if base dir and user dir were same
 	not_portable &= strcmp( env_t::user_dir, env_t::base_dir )!=0;
 
@@ -1209,6 +1214,7 @@ int simu_main(int argc, char** argv)
 		}
 	}
 
+#if COLOUR_DEPTH != 0
 	// now find out if there is a valid font
 	{
 		const utf8 *new_world = (const utf8 *)translator::translate("Beenden");
@@ -1222,6 +1228,7 @@ int simu_main(int argc, char** argv)
 			destroy_win(sel);
 		}
 	}
+#endif
 
 	bool new_world = true;
 	std::string loadgame;
@@ -1583,6 +1590,7 @@ int simu_main(int argc, char** argv)
 		// play next tune?
 		check_midi();
 
+#if COLOUR_DEPTH != 0
 		if(  new_world  ) {
 			dbg->message("simu_main()", "Show banner ... " );
 			ticker::add_msg("Welcome to Simutrans", koord3d::invalid, PLAYER_FLAG | color_idx_to_rgb(COL_SOFT_BLUE));
@@ -1590,6 +1598,7 @@ int simu_main(int argc, char** argv)
 			// only show new world, if no other dialogue is active ...
 			new_world = win_get_open_count()==0;
 		}
+#endif
 
 		// to purge all previous old messages
 		welt->get_message()->set_message_flags(env_t::message_flags[0], env_t::message_flags[1], env_t::message_flags[2], env_t::message_flags[3]);

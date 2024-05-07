@@ -99,6 +99,9 @@ line_management_gui_t::line_management_gui_t( linehandle_t line_, player_t* play
 	line = line_;
 	player = player_;
 
+	scrolly_convois.set_checkered(true);
+	scrolly_halts.set_checkered(true);
+
 	// line name
 	inp_name.add_listener( this );
 	add_component( &inp_name, 3 );
@@ -193,6 +196,7 @@ void line_management_gui_t::init()
 		inp_name.set_text(line_name, sizeof(line_name));
 
 		bt_delete_line.enable();
+		bt_withdraw_line.pressed = line->get_withdraw();
 		// init_chart
 		if( chart.get_curve_count() == 0 ) {
 			container_stats.add_table( 4, 3 )->set_force_equal_columns( true );

@@ -62,7 +62,7 @@ void gui_aligned_container_t::set_size(scr_size new_size)
 //	printf("\n");
 
 #ifdef DEBUG
-	if (new_size.w < min_size.w  ||  new_size.h < min_size.h) {
+	if (new_size.w>0  &&  (new_size.w < min_size.w  ||  new_size.h < min_size.h)) {
 		dbg->warning("gui_aligned_container_t::set_size", "new size (%d,%d) cannot fit all elements; at least (%d,%d) required", new_size.w, new_size.h, min_size.w, min_size.h);
 	}
 #endif
@@ -262,6 +262,10 @@ void gui_aligned_container_t::compute_sizes(vector_tpl<scr_coord_val>& col_w, ve
 
 			// only compute if necessary
 			scr_size s = outer == 0 ||  span>1 ? (calc_max ? comp->get_max_size() : comp->get_min_size()) : scr_size(0,0);
+
+			if (!calc_max && comp->is_marginless()) {
+				s = s - (margin_tl + margin_br);
+			}
 
 			if (outer == 0) {
 
