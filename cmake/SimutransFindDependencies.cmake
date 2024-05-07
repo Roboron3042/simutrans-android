@@ -60,7 +60,7 @@ else ()
 		set(SHARED_LIBRARY_SO ${CMAKE_CURRENT_SOURCE_DIR}/../freetype/prebuilt/${PREBUILT_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libfreetype.so)
 	endif ()
 	set_target_properties(Freetype::Freetype PROPERTIES IMPORTED_LOCATION ${SHARED_LIBRARY_SO})
- 	set_target_properties(Freetype::Freetype PROPERTIES FOUND TRUE)
+ 	set(Freetype_FOUND TRUE)
 
 	find_library(SDL2 SDL2)
 
